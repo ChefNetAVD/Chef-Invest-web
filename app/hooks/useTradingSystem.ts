@@ -116,8 +116,6 @@ export function useTradingSystem(userId: string) {
     return {
       totalReferrals: partnerNetwork.totalReferrals,
       level1Partners: partnerNetwork.level1Partners.length,
-      level2Partners: partnerNetwork.level2Partners.length,
-      level3Partners: partnerNetwork.level3Partners.length,
       totalEarnings: formatCurrency(partnerNetwork.totalEarnings)
     };
   }, [partnerNetwork]);

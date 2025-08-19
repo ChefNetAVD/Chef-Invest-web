@@ -34,8 +34,6 @@ class TradingSystem {
 
 ### Уровни комиссий
 - **1 уровень (прямые продажи)**: 10%
-- **2 уровень (косвенные продажи)**: 5%
-- **3 уровень (косвенные продажи)**: 2%
 
 ### Структура сети
 ```typescript
@@ -43,12 +41,8 @@ interface PartnerNetwork {
   userId: string;
   referrerId: string | null;
   level1Partners: string[];  // Прямые партнеры
-  level2Partners: string[];  // Партнеры 2-го уровня
-  level3Partners: string[];  // Партнеры 3-го уровня
-  totalCommissions: number;
-  level1Commissions: number;
-  level2Commissions: number;
-  level3Commissions: number;
+  totalReferrals: number;
+  totalEarnings: number;
 }
 ```
 
@@ -69,7 +63,7 @@ calculatePartnerCommissions(amount: number, network: PartnerNetwork): PartnerCom
 ### Константы
 ```typescript
 const SHARE_CONSTANTS = {
-  CURRENT_PRICE: 0.01,        // $0.01 за акцию
+  CURRENT_PRICE: 0.10,        // $0.10 за акцию
   MIN_ORDER_SIZE: 1,          // Минимум 1 акция
   MAX_ORDER_SIZE: 1000000,    // Максимум 1M акций
   DECIMAL_PLACES: 2           // 2 знака после запятой
@@ -320,7 +314,7 @@ tradingSystem.initializeUser('user123', 'referrer456');
 ### Покупка акций
 ```typescript
 const { order, transaction, shareTransaction, commissions } = 
-  tradingSystem.buyShares('user123', 1000, 0.01);
+  tradingSystem.buyShares('user123', 1000, 0.10);
 ```
 
 ### Получение статистики
@@ -343,7 +337,7 @@ function InvestmentPage() {
   } = useTradingSystem('user123');
 
   const handleBuy = async () => {
-    await buyShares(1000, 0.01);
+    await buyShares(1000, 0.10);
   };
 
   return (

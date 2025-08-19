@@ -61,8 +61,6 @@ export class TradingSystem {
       userId,
       referrerId: referrerId || null,
       level1Partners: [],
-      level2Partners: [],
-      level3Partners: [],
       totalReferrals: 0,
       totalEarnings: 0
     };

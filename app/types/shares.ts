@@ -44,7 +44,7 @@ export interface ShareTransaction {
 
 // Константы для акций
 export const SHARE_CONSTANTS = {
-  CURRENT_PRICE: 0.01, // $0.01 за акцию
+  CURRENT_PRICE: 0.10, // $0.10 за акцию
   MIN_ORDER_SIZE: 100, // Минимальный размер заказа
   MAX_ORDER_SIZE: 1000000, // Максимальный размер заказа
   TRADING_FEE: 0.001, // 0.1% комиссия за сделку
