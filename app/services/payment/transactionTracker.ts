@@ -123,7 +123,11 @@ export class TransactionTracker {
       tx.status === 'success'
     );
 
-    console.log(`Found ${newTransactions.length} new transactions for ${network}`);
+    console.log(`🔍 Found ${newTransactions.length} new transactions for ${network}`);
+
+    // Получаем ожидающие платежи для этой сети
+    const pendingPayments = this.getPendingPaymentsForNetwork(network);
+    console.log(`📋 Found ${pendingPayments.length} pending payments for ${network}`);
 
     // Обрабатываем каждую новую транзакцию
     for (const transaction of newTransactions) {
@@ -139,10 +143,15 @@ export class TransactionTracker {
    */
   private async processNewTransaction(transaction: any, network: NetworkType): Promise<void> {
     try {
-      console.log(`Processing transaction ${transaction.hash} on ${network}`);
+      console.log(`🔄 Processing transaction ${transaction.hash} on ${network}`);
 
       // Ищем подходящий платежный запрос
       const pendingPayments = this.getPendingPaymentsForNetwork(network);
+      
+      if (pendingPayments.length === 0) {
+        console.log(`   ⚠️ No pending payments found for ${network}`);
+        return;
+      }
       
       for (const payment of pendingPayments) {
         const amount = parseFloat(transaction.value) / Math.pow(10, this.getDecimals(network));
@@ -194,9 +203,7 @@ export class TransactionTracker {
    * Получает ожидающие платежи для конкретной сети
    */
   private getPendingPaymentsForNetwork(network: NetworkType): USDTPaymentRequest[] {
-    // Здесь нужно получить доступ к pending платежам из PaymentService
-    // Пока возвращаем пустой массив, в реальной реализации нужно добавить метод
-    return [];
+    return this.paymentService.getPendingPaymentsForNetwork(network);
   }
 
   /**

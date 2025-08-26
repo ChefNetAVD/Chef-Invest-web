@@ -101,6 +101,29 @@ export class PaymentService {
   }
 
   /**
+   * Получает ожидающие платежи для конкретной сети
+   */
+  getPendingPaymentsForNetwork(network: NetworkType): USDTPaymentRequest[] {
+    return Array.from(this.paymentRequests.values())
+      .filter(request => 
+        request.network === network && 
+        request.status === 'pending' &&
+        request.expiresAt > new Date()
+      );
+  }
+
+  /**
+   * Получает все ожидающие платежи
+   */
+  getAllPendingPayments(): USDTPaymentRequest[] {
+    return Array.from(this.paymentRequests.values())
+      .filter(request => 
+        request.status === 'pending' &&
+        request.expiresAt > new Date()
+      );
+  }
+
+  /**
    * Обновляет статус платежного запроса
    */
   updatePaymentStatus(id: string, status: PaymentStatus, metadata?: Record<string, any>): boolean {
@@ -172,11 +195,7 @@ export class PaymentService {
    * Проверяет все ожидающие платежи
    */
   async checkPendingPayments(): Promise<void> {
-    const pendingPayments = Array.from(this.paymentRequests.values())
-      .filter(request => 
-        request.status === 'pending' &&
-        request.expiresAt > new Date()
-      );
+    const pendingPayments = this.getAllPendingPayments();
 
     for (const payment of pendingPayments) {
       if (this.processingQueue.has(payment.id)) {
