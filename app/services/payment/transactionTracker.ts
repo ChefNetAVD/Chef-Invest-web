@@ -204,19 +204,22 @@ export class TransactionTracker {
    */
   private async onPaymentConfirmed(payment: USDTPaymentRequest, validation: any): Promise<void> {
     try {
-      // Здесь можно добавить логику для:
-      // - Начисления средств пользователю
-      // - Отправки уведомлений
-      // - Логирования
-      // - Интеграции с торговой системой
-      
-      console.log(`Payment ${payment.id} completed successfully`);
+      console.log(`Payment ${payment.id} confirmed with ${validation.confirmations} confirmations`);
       
       // Обновляем статус на завершенный
       this.paymentService.updatePaymentStatus(payment.id, 'completed', {
         confirmedAt: new Date(),
         finalConfirmations: validation.confirmations
       });
+
+      // Автоматически обрабатываем подтвержденный платеж
+      const success = await this.paymentService.processConfirmedPayment(payment.id);
+      
+      if (success) {
+        console.log(`✅ Payment ${payment.id} automatically processed and balance credited`);
+      } else {
+        console.error(`❌ Failed to automatically process payment ${payment.id}`);
+      }
 
     } catch (error) {
       console.error(`Error processing confirmed payment ${payment.id}:`, error);
@@ -229,6 +232,22 @@ export class TransactionTracker {
   private getDecimals(network: NetworkType): number {
     const config = this.blockchainService.getNetworkConfig(network);
     return config.decimals;
+  }
+
+  /**
+   * Принудительно проверяет все ожидающие платежи
+   */
+  async forceCheck(): Promise<void> {
+    console.log('Force checking all pending payments...');
+    await this.paymentService.checkPendingPayments();
+  }
+
+  /**
+   * Обрабатывает все подтвержденные платежи
+   */
+  async processConfirmedPayments(): Promise<number> {
+    console.log('Processing all confirmed payments...');
+    return await this.paymentService.processAllConfirmedPayments();
   }
 
   /**
@@ -245,13 +264,5 @@ export class TransactionTracker {
       isRunning: this.isRunning,
       lastCheckedBlocks
     };
-  }
-
-  /**
-   * Принудительно проверяет все ожидающие платежи
-   */
-  async forceCheck(): Promise<void> {
-    console.log('Force checking all pending payments...');
-    await this.paymentService.checkPendingPayments();
   }
 } 

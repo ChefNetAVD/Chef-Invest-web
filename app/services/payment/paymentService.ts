@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { BlockchainService } from '../blockchain/blockchainService';
+import { TradingSystem } from '../../utils/tradingSystem';
 import { 
   USDTPaymentRequest, 
   NetworkType, 
@@ -11,6 +12,7 @@ import { PAYMENT_CONSTANTS } from '../../config/blockchain';
 
 export class PaymentService {
   private blockchainService: BlockchainService;
+  private tradingSystem: TradingSystem | null = null;
   private paymentRequests: Map<string, USDTPaymentRequest>;
   private processingQueue: Set<string>;
 
@@ -18,6 +20,20 @@ export class PaymentService {
     this.blockchainService = new BlockchainService();
     this.paymentRequests = new Map();
     this.processingQueue = new Set();
+  }
+
+  /**
+   * Устанавливает экземпляр TradingSystem для интеграции
+   */
+  setTradingSystem(tradingSystem: TradingSystem): void {
+    this.tradingSystem = tradingSystem;
+  }
+
+  /**
+   * Проверяет, подключен ли TradingSystem
+   */
+  private isTradingSystemConnected(): boolean {
+    return this.tradingSystem !== null;
   }
 
   /**
@@ -288,6 +304,94 @@ export class PaymentService {
         this.updatePaymentStatus(id, 'expired');
       }
     }
+  }
+
+  /**
+   * Обрабатывает подтвержденный платеж и начисляет баланс
+   */
+  async processConfirmedPayment(paymentId: string): Promise<boolean> {
+    const payment = this.paymentRequests.get(paymentId);
+    if (!payment || payment.status !== 'confirmed') {
+      return false;
+    }
+
+    try {
+      // Проверяем подключение к торговой системе
+      if (!this.isTradingSystemConnected()) {
+        console.error(`Trading system not connected for payment ${paymentId}`);
+        this.updatePaymentStatus(paymentId, 'failed', {
+          error: 'Trading system not connected',
+          processedAt: new Date()
+        });
+        return false;
+      }
+
+      // Проверяем, что пользователь существует в торговой системе
+      const userBalance = this.tradingSystem!.getUserBalance(payment.userId);
+      if (!userBalance) {
+        console.error(`User ${payment.userId} not found in trading system`);
+        this.updatePaymentStatus(paymentId, 'failed', {
+          error: 'User not found in trading system',
+          processedAt: new Date()
+        });
+        return false;
+      }
+
+      // Начисляем баланс через торговую систему
+      const depositTransaction = this.tradingSystem!.deposit(payment.userId, payment.amount);
+
+      // Логируем успешное начисление
+      console.log(`✅ SUCCESS: Payment ${paymentId} processed successfully`);
+      console.log(`   User: ${payment.userId}`);
+      console.log(`   Amount: ${payment.amount} USDT → $${payment.amount} USD`);
+      console.log(`   Network: ${payment.network}`);
+      console.log(`   Transaction ID: ${depositTransaction.id}`);
+      console.log(`   Balance before: $${userBalance.usdBalance}`);
+      console.log(`   Balance after: $${userBalance.usdBalance + payment.amount}`);
+
+      // Обновляем статус платежа на завершенный
+      this.updatePaymentStatus(paymentId, 'completed', {
+        internalTransactionId: depositTransaction.id,
+        processedAt: new Date(),
+        balanceBefore: userBalance.usdBalance,
+        balanceAfter: userBalance.usdBalance + payment.amount,
+        success: true
+      });
+
+      return true;
+
+    } catch (error) {
+      console.error(`❌ ERROR: Failed to process payment ${paymentId}:`, error);
+      
+      // Отменяем платеж при ошибке
+      this.updatePaymentStatus(paymentId, 'failed', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        processedAt: new Date(),
+        success: false
+      });
+      
+      return false;
+    }
+  }
+
+  /**
+   * Автоматически обрабатывает все подтвержденные платежи
+   */
+  async processAllConfirmedPayments(): Promise<number> {
+    const confirmedPayments = Array.from(this.paymentRequests.values())
+      .filter(payment => payment.status === 'confirmed');
+
+    let processedCount = 0;
+    
+    for (const payment of confirmedPayments) {
+      const success = await this.processConfirmedPayment(payment.id);
+      if (success) {
+        processedCount++;
+      }
+    }
+
+    console.log(`Processed ${processedCount} confirmed payments`);
+    return processedCount;
   }
 
   /**

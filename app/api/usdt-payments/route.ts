@@ -107,7 +107,29 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { paymentId, status, transactionHash } = body;
+    const { paymentId, status, transactionHash, action } = body;
+
+    // Обработка подтвержденных платежей
+    if (action === 'processConfirmed') {
+      try {
+        const processedCount = await paymentService.processAllConfirmedPayments();
+        return NextResponse.json({ 
+          success: true, 
+          processedCount,
+          message: `Successfully processed ${processedCount} confirmed payments`
+        });
+      } catch (error) {
+        console.error('Error processing confirmed payments:', error);
+        return NextResponse.json(
+          { 
+            success: false, 
+            error: error instanceof Error ? error.message : 'Failed to process payments',
+            processedCount: 0
+          },
+          { status: 500 }
+        );
+      }
+    }
 
     if (!paymentId || !status) {
       return NextResponse.json(
