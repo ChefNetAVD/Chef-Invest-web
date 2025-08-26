@@ -65,6 +65,30 @@ export class TradingSystem {
       totalEarnings: 0
     };
     this.partnerNetworks.set(userId, partnerNetwork);
+
+    // Обновляем сеть реферера, если он указан
+    if (referrerId) {
+      this.updateReferrerNetwork(referrerId, userId);
+    }
+  }
+
+  /**
+   * Обновляет сеть реферера при добавлении нового партнера
+   */
+  private updateReferrerNetwork(referrerId: string, newPartnerId: string): void {
+    const referrerNetwork = this.partnerNetworks.get(referrerId);
+    if (!referrerNetwork) {
+      console.error(`Referrer network not found: ${referrerId}`);
+      return;
+    }
+
+    // Добавляем нового партнера в список прямых рефералов
+    if (!referrerNetwork.level1Partners.includes(newPartnerId)) {
+      referrerNetwork.level1Partners.push(newPartnerId);
+      referrerNetwork.totalReferrals++;
+      
+      console.log(`📈 Updated referrer network: ${referrerId} now has ${referrerNetwork.totalReferrals} referrals`);
+    }
   }
 
   /**
