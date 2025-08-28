@@ -110,10 +110,10 @@ export class TronService {
         return null;
       }
 
-      const tx = data.data;
+      const tx = data.data as any;
       
       // Проверяем, что это USDT транзакция
-      if (tx.contract_address !== 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t') {
+      if (tx?.contract_address !== 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t') {
         return null;
       }
 
@@ -227,7 +227,7 @@ export class TronService {
         throw new Error('Failed to fetch latest block');
       }
 
-      return data.data.block_header?.raw_data?.number || 0;
+      return (data.data as any)?.block_header?.raw_data?.number || 0;
     } catch (error) {
       console.error('Error fetching current block number:', error);
       throw error;

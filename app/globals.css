@@ -1,18 +1,82 @@
-@import "tailwindcss";
-@import "./styles/design-tokens.css";
+@import './styles/design-tokens.css';
+@import './styles/figma-landing.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: var(--color-background);
-  --foreground: var(--color-text);
+/* Global styles */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
+  max-width: 100vw;
+  overflow-x: hidden;
   font-family: var(--font-family-primary);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  font-weight: var(--font-weight-normal);
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-default);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-default) var(--scrollbar-track);
+}
+
+/* Container styles */
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Utility classes for shadows */
+.shadow-gray-1 {
+  box-shadow: var(--shadow-gray-1);
+}
+
+.shadow-gray-2 {
+  box-shadow: var(--shadow-gray-2);
+}
+
+.shadow-gray-3 {
+  box-shadow: var(--shadow-gray-3);
+}
+
+.shadow-orange-1 {
+  box-shadow: var(--shadow-orange-1);
+}
+
+.shadow-orange-2 {
+  box-shadow: var(--shadow-orange-2);
+}
+
+.shadow-orange-3 {
+  box-shadow: var(--shadow-orange-3);
 }
 
 /* Базовые стили для форм */
@@ -22,17 +86,4 @@ input, select, textarea {
 
 button {
   @apply px-4 py-2 rounded-md transition-colors duration-200;
-}
-
-/* Минимальные кастомные стили для бизнес-логики */
-.calculator-input {
-  @apply w-full border border-gray-300 rounded-md px-3 py-2;
-}
-
-.calculator-button {
-  @apply bg-blue-500 text-white hover:bg-blue-600;
-}
-
-.crypto-address {
-  @apply font-mono text-sm bg-gray-100 p-2 rounded;
 }

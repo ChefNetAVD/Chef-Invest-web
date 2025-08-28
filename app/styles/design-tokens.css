@@ -7,9 +7,29 @@
   --color-white: #ffffff;
   --color-header-bg: #391000; /* Header background с 30% прозрачности */
   
+  /* Новые цвета из Figma CSS */
+  --color-orange-50: #FFF7ED;
+  --color-orange-500: #D93F29;
+  --color-orange-600: #FB7F43;
+  --color-gray-900: #54403A;
+  --color-gray-800: #674E47;
+  --color-gray-600: #4F4F4F;
+  --color-gray-500: #4D5660;
+  --color-gray-300: #C4C4C4;
+  --color-green-500: #00AE42;
+  --color-orange-100: #F5EAE1;
+  --color-red-200: #FBA8A8;
+  --color-gray-200: #D9D9D9;
+  
   /* Градиенты */
   --gradient-primary: linear-gradient(135deg, #54403a 0%, #ea580c 100%);
   --gradient-hero: linear-gradient(135deg, #54403a 0%, #ea580c 50%, #ea580c 100%);
+  
+  /* Новые градиенты из Figma CSS */
+  --gradient-button-primary: linear-gradient(135deg, #D93F29 0%, #FB7F43 100%);
+  --gradient-button-secondary: linear-gradient(135deg, #54403A 0%, #674E47 100%);
+  --gradient-card-1: linear-gradient(135deg, #FFF7ED 0%, #F5EAE1 100%);
+  --gradient-card-2: linear-gradient(135deg, #FBA8A8 0%, #D93F29 100%);
   
   /* Typography - из Figma */
   --font-family-primary: 'Arial', sans-serif;
@@ -79,4 +99,68 @@
   --toolbar-width: 231px;
   --toolbar-height: 32px;
   --toolbar-gap: 8px;
+
+  /* Shadows - из дизайн-системы */
+  --shadow-gray-1: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-gray-2: 0 2px 6px rgba(0, 0, 0, 0.15);
+  --shadow-gray-3: 0 4px 12px rgba(0, 0, 0, 0.2);
+  
+  --shadow-orange-1: 0 1px 3px rgba(234, 88, 12, 0.2);
+  --shadow-orange-2: 0 2px 6px rgba(234, 88, 12, 0.25);
+  --shadow-orange-3: 0 4px 12px rgba(234, 88, 12, 0.3);
+
+  /* Star Rating Colors */
+  --star-empty: #d1d5db;
+  --star-filled-light: #86efac;
+  --star-filled-dark: #22c55e;
+  --star-text: #374151;
+
+  /* Tab Colors */
+  --tab-default: #374151;
+  --tab-hover: #ea580c;
+  --tab-active: #ea580c;
+  --tab-underline: #ea580c;
+
+  /* Radio & Checkbox Colors */
+  --checkbox-default: #a78b71;
+  --checkbox-press: #ea580c;
+  --checkbox-active: #ea580c;
+  --checkbox-disabled: #d1d5db;
+  --checkbox-text-default: #a78b71;
+  --checkbox-text-active: #1f2937;
+  --checkbox-text-disabled: #d1d5db;
+
+  /* Scrollbar Colors */
+  --scrollbar-track: #e5e7eb;
+  --scrollbar-thumb-default: #9ca3af;
+  --scrollbar-thumb-hover: #6b7280;
+
+  /* Status Bar Colors */
+  --status-bar-text-dark: #374151;
+  --status-bar-text-light: #f9fafb;
+  --status-bar-bg: #f3f4f6;
+
+  /* Новые размеры иконок из Figma CSS */
+  --icon-size-24: 24px;
+  --icon-size-40: 40px;
+  --icon-size-60: 60px;
+  --icon-size-80: 80px;
+  --icon-size-120: 120px;
+
+  /* Новые размеры мокапов */
+  --mockup-iphone-width: 375px;
+  --mockup-iphone-height: 812px;
+  --mockup-samsung-width: 360px;
+  --mockup-samsung-height: 800px;
+
+  /* Новые размеры карточек */
+  --card-width-standard: 400px;
+  --card-height-standard: 300px;
+  --card-width-large: 500px;
+  --card-height-large: 400px;
+
+  /* Новые размеры секций */
+  --section-padding-y: 120px;
+  --section-padding-x: 80px;
+  --section-gap: 80px;
 } 

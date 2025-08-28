@@ -178,10 +178,7 @@ export class PaymentService {
           processedAt: new Date()
         });
 
-        return {
-          ...validation,
-          metadata: { paymentId: payment.id }
-        };
+        return validation;
       }
     }
 

@@ -1,20 +1,9 @@
-import React from 'react';
+"use client";
 
-interface LogoProps {
-  className?: string;
-}
-
-export const Logo: React.FC<LogoProps> = ({ className = '' }) => {
+export function Logo() {
   return (
-    <div className={`flex items-center ${className}`}>
-      <svg 
-        width="183" 
-        height="24" 
-        viewBox="0 0 183 24" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-auto"
-      >
+    <div className="logo-invest">
+      <svg width="183" height="24" viewBox="0 0 183 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11.9328 15.9544C15.9771 15.9544 19.2557 12.6758 19.2557 8.63151C19.2557 4.58718 15.9771 1.30859 11.9328 1.30859C7.88845 1.30859 4.60986 4.58718 4.60986 8.63151C4.60986 12.6758 7.88845 15.9544 11.9328 15.9544Z" fill="#FFF7ED"/>
         <path d="M4.90723 14.7578C7.61742 14.7578 9.81446 12.5608 9.81446 9.85059C9.81446 7.1404 7.61742 4.94336 4.90723 4.94336C2.19704 4.94336 0 7.1404 0 9.85059C0 12.5608 2.19704 14.7578 4.90723 14.7578Z" fill="#FFF7ED"/>
         <path d="M18.9634 14.7578C21.6736 14.7578 23.8706 12.5608 23.8706 9.85059C23.8706 7.1404 21.6736 4.94336 18.9634 4.94336C16.2532 4.94336 14.0562 7.1404 14.0562 9.85059C14.0562 12.5608 16.2532 14.7578 18.9634 14.7578Z" fill="#FFF7ED"/>
@@ -36,4 +25,4 @@ export const Logo: React.FC<LogoProps> = ({ className = '' }) => {
       </svg>
     </div>
   );
-}; 
+} 

@@ -160,7 +160,7 @@ export function getReferralList(userId: string, tradingSystem: TradingSystem) {
         .filter(tx => tx.type === 'share_buy')
         .reduce((sum, tx) => sum + tx.amount, 0),
       commissionsEarned: totalCommissions,
-      isActive: partnerBalance?.usdBalance > 0 || partnerBalance?.shareBalance > 0
+      isActive: (partnerBalance?.usdBalance || 0) > 0 || (partnerBalance?.shareBalance || 0) > 0
     };
   });
 }

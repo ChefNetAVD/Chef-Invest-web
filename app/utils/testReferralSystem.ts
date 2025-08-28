@@ -274,8 +274,8 @@ export class ReferralSystemTester {
     console.log(`  - Referrer balance: $${referrerBalance?.usdBalance}`);
     console.log(`  - Referrer earnings: $${referrerStats?.totalEarnings}`);
 
-    if (referrerStats?.totalEarnings < 5) { // 10% от $50 = $5
-      throw new Error(`Expected earnings >= $5, got $${referrerStats?.totalEarnings}`);
+    if ((referrerStats?.totalEarnings || 0) < 5) { // 10% от $50 = $5
+      throw new Error(`Expected earnings >= $5, got $${referrerStats?.totalEarnings || 0}`);
     }
 
     // 8. Проверяем активность партнера

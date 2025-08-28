@@ -1,23 +1,19 @@
-import React from 'react';
-import { NAVIGATION_ITEMS } from '../../lib/constants';
+"use client";
 
-interface NavigationProps {
-  className?: string;
-}
-
-export const Navigation: React.FC<NavigationProps> = ({ className = '' }) => {
+export function Navigation() {
   return (
-    <nav className={`hidden md:flex items-center gap-6 ${className}`}>
-      {NAVIGATION_ITEMS.map((item, index) => (
-        <a
-          key={index}
-          href={`#${item.toLowerCase().replace(/\s+/g, '-').replace(/[?]/g, '')}`}
-          className="transition-colors duration-200 text-sm font-normal hover:text-orange-600"
-          style={{ color: 'var(--color-text)' }}
-        >
-          {item}
-        </a>
-      ))}
+    <nav className="flex items-center gap-8">
+      <a href="#about" className="nav-item">О нас</a>
+      <a href="#features" className="nav-item">Особенности</a>
+      <a href="#services" className="nav-item">Услуги</a>
+      <a href="#contact" className="nav-item">Контакты</a>
+      
+      {/* Language switcher */}
+      <button className="nav-item">RU</button>
+      
+      {/* Auth buttons */}
+      <button className="btn-secondary">Войти</button>
+      <button className="btn-primary">Регистрация</button>
     </nav>
   );
-}; 
+} 

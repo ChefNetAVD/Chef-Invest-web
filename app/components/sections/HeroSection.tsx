@@ -1,62 +1,32 @@
-import React from 'react';
-import { Button } from '../ui/Button';
-import { BackgroundImage } from '../ui/BackgroundImage';
-import { HERO_CONTENT } from '../../lib/constants';
+"use client";
 
-export const HeroSection: React.FC = () => {
+import { Button } from "../ui/Button";
+
+export function HeroSection() {
   return (
-    <section 
-      className="relative min-h-screen flex items-center justify-center"
-      style={{ 
-        minHeight: 'var(--hero-height)',
-        paddingTop: 'var(--header-height)'
-      }}
-    >
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <BackgroundImage />
-      </div>
+    <section className="relative">
+      {/* Background */}
+      <div className="hero-background"></div>
       
-      {/* Content Overlay */}
-      <div className="relative z-10 container mx-auto px-4">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Main Title */}
-          <h1 
-            className="text-6xl font-bold mb-6 leading-tight"
-            style={{
-              color: 'var(--color-text)',
-              fontSize: 'var(--font-size-6xl)',
-              lineHeight: 'var(--line-height-6xl)',
-              fontWeight: 'var(--font-weight-bold)'
-            }}
-          >
-            {HERO_CONTENT.title}
-          </h1>
-          
-          {/* Subtitle */}
-          <p 
-            className="text-xl mb-8 leading-relaxed"
-            style={{
-              color: 'var(--color-text)',
-              fontSize: 'var(--font-size-xl)',
-              lineHeight: 'var(--line-height-xl)',
-              fontWeight: 'var(--font-weight-normal)'
-            }}
-          >
-            {HERO_CONTENT.subtitle}
-          </p>
-          
-          {/* Call to Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="primary" size="big">
-              {HERO_CONTENT.ctaText}
-            </Button>
-            <Button variant="tertiary" size="big">
-              {HERO_CONTENT.ctaSecondary}
-            </Button>
-          </div>
+      {/* Content */}
+      <div className="hero-content">
+        <h1 className="hero-title">
+          Инвестируйте в будущее с ChefNet Invest
+        </h1>
+        <p className="hero-subtitle">
+          Современная платформа для безопасных и прибыльных инвестиций в криптовалюты и цифровые активы
+        </p>
+        <div className="flex gap-6">
+          <Button variant="primary" size="big">
+            Начать инвестировать
+            <span className="ico-arrow-right icon-24x24"></span>
+          </Button>
+          <Button variant="secondary" size="big">
+            Узнать больше
+            <span className="ico-arrow-right icon-24x24"></span>
+          </Button>
         </div>
       </div>
     </section>
   );
-}; 
+} 
