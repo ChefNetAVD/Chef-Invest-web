@@ -1,54 +1,33 @@
-import { Header } from "./components/layout/Header";
-import { Footer } from "./components/layout/Footer";
-import { HeroSection } from "./components/sections/HeroSection";
-import { FeaturesSection } from "./components/sections/FeaturesSection";
-import { AboutSection } from "./components/sections/AboutSection";
-import { ServicesSection } from "./components/sections/ServicesSection";
-import { ContactSection } from "./components/sections/ContactSection";
-import { MobileMockupsSection } from "./components/sections/MobileMockupsSection";
-import { InvestmentRoundsSection } from "./components/sections/InvestmentRoundsSection";
-import { RoadmapSection } from "./components/sections/RoadmapSection";
-import { ScrollToTop } from "./components/ui/ScrollToTop";
-import { DesignSystemDemo } from "./components/sections/DesignSystemDemo";
+import { Header } from './components/layout/Header';
+import { HeroSection } from './components/sections/HeroSection';
+import { FeaturesHeadline } from './components/sections/FeaturesHeadline';
+import SecondSection from './components/sections/SecondSection';
 
 export default function Home() {
   return (
-    <div className="landing-page">
+    <main className="relative min-h-screen flex flex-col">
+      {/* Background Image */}
+      <div style={{
+        position: 'absolute',
+        left: '0%',
+        right: '0%',
+        top: '0%',
+        bottom: '0%',
+        background: 'url(/2-10.jpg) center/cover no-repeat',
+        borderRadius: '0px 0px 70px 70px'
+      }} />
+      
       {/* Header */}
       <Header />
       
       {/* Hero Section */}
       <HeroSection />
       
-      {/* Features Section */}
-      <FeaturesSection />
+      {/* Features Headline Section */}
+      <FeaturesHeadline />
       
-      {/* About Section */}
-      <AboutSection />
-      
-      {/* Services Section */}
-      <ServicesSection />
-      
-      {/* Mobile Mockups Section */}
-      <MobileMockupsSection />
-      
-      {/* Investment Rounds Section */}
-      <InvestmentRoundsSection />
-      
-      {/* Roadmap Section */}
-      <RoadmapSection />
-      
-      {/* Contact Section */}
-      <ContactSection />
-      
-      {/* Footer */}
-      <Footer />
-      
-      {/* Scroll to Top Button */}
-      <ScrollToTop />
-      
-      {/* Design System Demo */}
-      <DesignSystemDemo />
-    </div>
+      {/* Second Section */}
+      <SecondSection />
+    </main>
   );
 }

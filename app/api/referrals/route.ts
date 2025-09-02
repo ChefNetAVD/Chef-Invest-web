@@ -9,26 +9,20 @@ import {
   getReferralList,
   isActivePartner
 } from '../../utils/referral';
+import { requireAuth, getUserFromRequest } from '../../middleware/auth';
 
 // Инициализируем торговую систему
 const tradingSystem = new TradingSystem();
 
-export async function GET(request: NextRequest) {
+export const GET = requireAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    const user = getUserFromRequest(request);
     const action = searchParams.get('action');
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Missing required parameter: userId' },
-        { status: 400 }
-      );
-    }
 
     // Получение реферальной статистики
     if (action === 'stats') {
-      const stats = getReferralStats(userId, tradingSystem);
+      const stats = getReferralStats(user.userId, tradingSystem);
       if (!stats) {
         return NextResponse.json(
           { error: 'User not found' },
@@ -40,27 +34,27 @@ export async function GET(request: NextRequest) {
 
     // Получение списка рефералов
     if (action === 'list') {
-      const referralList = getReferralList(userId, tradingSystem);
+      const referralList = getReferralList(user.userId, tradingSystem);
       return NextResponse.json({ referralList });
     }
 
     // Генерация реферальной ссылки
     if (action === 'link') {
-      const referralLink = generateReferralLink(userId);
+      const referralLink = generateReferralLink(user.userId);
       return NextResponse.json({ referralLink });
     }
 
     // Проверка активности партнера
     if (action === 'active') {
-      const isActive = isActivePartner(userId, tradingSystem);
+      const isActive = isActivePartner(user.userId, tradingSystem);
       return NextResponse.json({ isActive });
     }
 
     // Получение полной информации о рефералах
-    const stats = getReferralStats(userId, tradingSystem);
-    const referralList = getReferralList(userId, tradingSystem);
-    const referralLink = generateReferralLink(userId);
-    const isActive = isActivePartner(userId, tradingSystem);
+    const stats = getReferralStats(user.userId, tradingSystem);
+    const referralList = getReferralList(user.userId, tradingSystem);
+    const referralLink = generateReferralLink(user.userId);
+    const isActive = isActivePartner(user.userId, tradingSystem);
 
     return NextResponse.json({
       stats,
@@ -76,9 +70,9 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = requireAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const { action, newUserId, referrerId, url } = body;
@@ -165,4 +159,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}); 

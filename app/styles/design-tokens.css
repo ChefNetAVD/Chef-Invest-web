@@ -1,166 +1,85 @@
 :root {
-  /* Colors - из Figma */
-  --color-primary: #ea580c; /* Orange/600 */
-  --color-secondary: #54403a; /* Gray-Orange/900 */
-  --color-text: #fbf5f1; /* Gray-Orange/50 */
-  --color-background: #1a1a1a;
-  --color-white: #ffffff;
-  --color-header-bg: #391000; /* Header background с 30% прозрачности */
+  /* Colors */
+  --primary-color: #D93F29;
+  --primary-hover: #B83222;
+  --secondary-color: #FFF7ED;
+  --accent-color: #3B82F6;
   
-  /* Новые цвета из Figma CSS */
-  --color-orange-50: #FFF7ED;
-  --color-orange-500: #D93F29;
-  --color-orange-600: #FB7F43;
-  --color-gray-900: #54403A;
-  --color-gray-800: #674E47;
-  --color-gray-600: #4F4F4F;
-  --color-gray-500: #4D5660;
-  --color-gray-300: #C4C4C4;
-  --color-green-500: #00AE42;
-  --color-orange-100: #F5EAE1;
-  --color-red-200: #FBA8A8;
-  --color-gray-200: #D9D9D9;
+  /* Background colors */
+  --background-primary: #FFFFFF;
+  --background-secondary: #F8F9FA;
+  --background-dark: #1A1A1A;
   
-  /* Градиенты */
-  --gradient-primary: linear-gradient(135deg, #54403a 0%, #ea580c 100%);
-  --gradient-hero: linear-gradient(135deg, #54403a 0%, #ea580c 50%, #ea580c 100%);
+  /* Text colors */
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B7280;
+  --text-light: #FFFFFF;
   
-  /* Новые градиенты из Figma CSS */
-  --gradient-button-primary: linear-gradient(135deg, #D93F29 0%, #FB7F43 100%);
-  --gradient-button-secondary: linear-gradient(135deg, #54403A 0%, #674E47 100%);
-  --gradient-card-1: linear-gradient(135deg, #FFF7ED 0%, #F5EAE1 100%);
-  --gradient-card-2: linear-gradient(135deg, #FBA8A8 0%, #D93F29 100%);
+  /* Border colors */
+  --border-light: rgba(255, 247, 237, 0.3);
+  --border-medium: #E5E7EB;
+  --border-dark: #374151;
   
-  /* Typography - из Figma */
-  --font-family-primary: 'Arial', sans-serif;
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
   
-  /* Font sizes и line heights */
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-base: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
-  --font-size-2xl: 24px;
-  --font-size-3xl: 28px;
-  --font-size-4xl: 36px;
-  --font-size-5xl: 50px;
-  --font-size-6xl: 72px;
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
   
-  /* Line heights */
-  --line-height-xs: 16px;
-  --line-height-sm: 20px;
-  --line-height-base: 24px;
-  --line-height-lg: 24px;
-  --line-height-xl: 24px;
-  --line-height-2xl: 28px;
-  --line-height-3xl: 32px;
-  --line-height-4xl: 40px;
-  --line-height-5xl: 48px;
-  --line-height-6xl: 72px;
+  /* Typography */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
   
   /* Font weights */
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
   
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-  --spacing-3xl: 64px;
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   
-  /* Button sizes - из Figma */
-  --button-height-big: 56px;
-  --button-height-standard: 48px;
-  --button-height-small: 40px;
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
   
-  --button-padding-big: 24px 32px;
-  --button-padding-standard: 20px 28px;
-  --button-padding-small: 16px 24px;
-  
-  /* Border radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 9999px;
-  
-  /* Layout */
-  --header-height: 84px; /* Обновлено с 80px на 84px */
-  --hero-height: 860px;
-  --hero-border-radius: 70px;
-  --container-max-width: 1536px;
-  
-  /* Header specific */
-  --header-padding-y: 24px;
-  --header-padding-x: 36px;
-  --toolbar-width: 231px;
-  --toolbar-height: 32px;
-  --toolbar-gap: 8px;
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
 
-  /* Shadows - из дизайн-системы */
-  --shadow-gray-1: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-gray-2: 0 2px 6px rgba(0, 0, 0, 0.15);
-  --shadow-gray-3: 0 4px 12px rgba(0, 0, 0, 0.2);
-  
-  --shadow-orange-1: 0 1px 3px rgba(234, 88, 12, 0.2);
-  --shadow-orange-2: 0 2px 6px rgba(234, 88, 12, 0.25);
-  --shadow-orange-3: 0 4px 12px rgba(234, 88, 12, 0.3);
-
-  /* Star Rating Colors */
-  --star-empty: #d1d5db;
-  --star-filled-light: #86efac;
-  --star-filled-dark: #22c55e;
-  --star-text: #374151;
-
-  /* Tab Colors */
-  --tab-default: #374151;
-  --tab-hover: #ea580c;
-  --tab-active: #ea580c;
-  --tab-underline: #ea580c;
-
-  /* Radio & Checkbox Colors */
-  --checkbox-default: #a78b71;
-  --checkbox-press: #ea580c;
-  --checkbox-active: #ea580c;
-  --checkbox-disabled: #d1d5db;
-  --checkbox-text-default: #a78b71;
-  --checkbox-text-active: #1f2937;
-  --checkbox-text-disabled: #d1d5db;
-
-  /* Scrollbar Colors */
-  --scrollbar-track: #e5e7eb;
-  --scrollbar-thumb-default: #9ca3af;
-  --scrollbar-thumb-hover: #6b7280;
-
-  /* Status Bar Colors */
-  --status-bar-text-dark: #374151;
-  --status-bar-text-light: #f9fafb;
-  --status-bar-bg: #f3f4f6;
-
-  /* Новые размеры иконок из Figma CSS */
-  --icon-size-24: 24px;
-  --icon-size-40: 40px;
-  --icon-size-60: 60px;
-  --icon-size-80: 80px;
-  --icon-size-120: 120px;
-
-  /* Новые размеры мокапов */
-  --mockup-iphone-width: 375px;
-  --mockup-iphone-height: 812px;
-  --mockup-samsung-width: 360px;
-  --mockup-samsung-height: 800px;
-
-  /* Новые размеры карточек */
-  --card-width-standard: 400px;
-  --card-height-standard: 300px;
-  --card-width-large: 500px;
-  --card-height-large: 400px;
-
-  /* Новые размеры секций */
-  --section-padding-y: 120px;
-  --section-padding-x: 80px;
-  --section-gap: 80px;
-} 
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-primary: #1A1A1A;
+    --background-secondary: #2D2D2D;
+    --text-primary: #FFFFFF;
+    --text-secondary: #9CA3AF;
+    --border-medium: #4B5563;
+  }
+}

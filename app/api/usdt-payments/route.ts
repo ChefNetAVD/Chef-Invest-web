@@ -3,20 +3,22 @@ import { PaymentService } from '../../services/payment/paymentService';
 import { BlockchainService } from '../../services/blockchain/blockchainService';
 import { NetworkType, PaymentStatus } from '../../types/usdtPayment';
 import { PAYMENT_CONSTANTS } from '../../config/blockchain';
+import { requireAuth, getUserFromRequest } from '../../middleware/auth';
 
 // Инициализируем сервисы
 const blockchainService = new BlockchainService();
 const paymentService = new PaymentService();
 
-export async function POST(request: NextRequest) {
+export const POST = requireAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
-    const { userId, amount, network } = body;
+    const { amount, network } = body;
+    const user = getUserFromRequest(request);
 
     // Валидация входных данных
-    if (!userId || !amount || !network) {
+    if (!amount || !network) {
       return NextResponse.json(
-        { error: 'Missing required fields: userId, amount, network' },
+        { error: 'Missing required fields: amount, network' },
         { status: 400 }
       );
     }
@@ -36,7 +38,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Создаем платежный запрос
-    const paymentRequest = paymentService.createPaymentRequest(userId, amount, network);
+    const paymentRequest = paymentService.createPaymentRequest(user.userId, amount, network);
 
     return NextResponse.json({
       success: true,
@@ -50,12 +52,12 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function GET(request: NextRequest) {
+export const GET = requireAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    const user = getUserFromRequest(request);
     const paymentId = searchParams.get('paymentId');
     const network = searchParams.get('network') as NetworkType;
     const status = searchParams.get('status') as PaymentStatus;
@@ -73,27 +75,20 @@ export async function GET(request: NextRequest) {
     }
 
     // Получаем платежи пользователя
-    if (userId) {
-      const payments = paymentService.getUserPaymentRequests(userId);
-      return NextResponse.json({ payments });
-    }
+    const payments = paymentService.getUserPaymentRequests(user.userId);
+    return NextResponse.json({ payments });
 
-    // Получаем статистику
-    if (searchParams.get('stats') === 'true') {
+    // Получаем статистику (только для админов)
+    if (searchParams.get('stats') === 'true' && user.role === 'admin') {
       const stats = paymentService.getPaymentStats();
       return NextResponse.json({ stats });
     }
 
-    // Получаем балансы сетей
-    if (searchParams.get('balances') === 'true') {
+    // Получаем балансы сетей (только для админов)
+    if (searchParams.get('balances') === 'true' && user.role === 'admin') {
       const balances = await blockchainService.getAllNetworkBalances();
       return NextResponse.json({ balances });
     }
-
-    return NextResponse.json(
-      { error: 'Missing required parameters' },
-      { status: 400 }
-    );
 
   } catch (error) {
     console.error('Error fetching payment data:', error);
@@ -102,15 +97,16 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function PUT(request: NextRequest) {
+export const PUT = requireAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const { paymentId, status, transactionHash, action } = body;
+    const user = getUserFromRequest(request);
 
-    // Обработка подтвержденных платежей
-    if (action === 'processConfirmed') {
+    // Обработка подтвержденных платежей (только для админов)
+    if (action === 'processConfirmed' && user.role === 'admin') {
       try {
         const processedCount = await paymentService.processAllConfirmedPayments();
         return NextResponse.json({ 
@@ -160,4 +156,4 @@ export async function PUT(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}); 
